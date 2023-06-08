@@ -1,3 +1,4 @@
+
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Hello Security</title>
@@ -6,6 +7,7 @@
 <div>
     <h1>Hello Security</h1>
     <form th:action="@{/logout}" method="post">
+    <sec:csrfInput />
         <input type="submit" value="Logout"/>
     </form>
 </div>

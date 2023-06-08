@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 @EnableWebSecurity
 @Configuration
-public class SecurityConfiguration {
+public class SecurityConfigs {
     @Autowired
     DataSource dataSource;
     @Bean
@@ -34,8 +34,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http ) throws Exception {
         http.csrf().and().cors().disable();
 
-
-
+        http.authorizeHttpRequests()
+                .requestMatchers("/login").hasRole("admin")
+                .requestMatchers("/**").authenticated()
+                .and()
+                .formLogin().permitAll();
 
         return http.build();
     }

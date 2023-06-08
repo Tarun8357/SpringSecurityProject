@@ -55,7 +55,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setPrefix("classpath:/templates/");
-        resolver.setSuffix(".html");
+        resolver.setSuffix(".jsp");
         resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
     }
