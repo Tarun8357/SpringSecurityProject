@@ -15,11 +15,9 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @EnableWebSecurity
 @Configuration
@@ -40,24 +38,29 @@ public class SecurityConfigs {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http ) throws Exception {
-        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().cors().disable();
+        http.cors().disable().csrf().disable();
 
 
         http.authorizeHttpRequests()
 //                .requestMatchers("/login").hasRole("ADMIN")
-                .requestMatchers("/calc").hasRole("ADMIN")
+                .requestMatchers("/calculator").hasRole("ADMIN")
                 .requestMatchers("/**")
                 .authenticated()
                 .and()
                 .formLogin().permitAll().successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        PrintWriter out = response.getWriter();
                         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                         String username = userDetails.getUsername();
-
+                        if (username.equalsIgnoreCase("ADMIN")){
                         System.out.println("The user " + username + " has logged in.");
 
-                        response.sendRedirect(request.getContextPath());
+                        response.sendRedirect("http://localhost:8080/calculator/");}
+                        else {
+                            response.sendError(403,"Logging as user");
+
+                        }
                     }
                 });
 

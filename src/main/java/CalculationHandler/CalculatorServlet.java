@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet("/calc")
+@WebServlet("/calculator")
 public class CalculatorServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,8 +35,6 @@ public class CalculatorServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      doPost(req, resp);
-      resp.sendRedirect("");
     super.doGet(req, resp);
   }
 }

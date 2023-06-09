@@ -22,7 +22,7 @@
 
     <security:csrfInput />
         <input type="submit" value="Logout"/>
-        <a href="http://localhost:8080/calculator/">click</a>
+     <!--   <a href="http://localhost:8080/calculator">click</a> -->
     </form>
 </div>
 </body>
